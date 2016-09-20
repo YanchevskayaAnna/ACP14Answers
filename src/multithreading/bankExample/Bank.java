@@ -1,8 +1,5 @@
 package multithreading.bankExample;
 
-/**
- * Created by Anna on 12.09.2016.
- */
 public class Bank {
 
     private final double[] accounts;
@@ -14,16 +11,19 @@ public class Bank {
         }
     }
 
-    public void transfer(int from, int to, double amount) {
-        if (accounts[from] < amount) {return;}
+    public synchronized void transfer(int from, int to, double amount) throws InterruptedException {
+        while (accounts[from] < amount) {
+            wait();
+        }
         System.out.print(Thread.currentThread());
         accounts[from] -= amount;
         System.out.printf(" %10.2f from %d to %d", amount, from, to);
         accounts[to] += amount;
         System.out.printf(" Total Balance: %10.2f%n", getTotalBalance());
+        notifyAll();
     }
 
-    private double getTotalBalance() {
+    private synchronized double getTotalBalance() {
         double sum = 0;
         for (double a: accounts){
             sum += a;

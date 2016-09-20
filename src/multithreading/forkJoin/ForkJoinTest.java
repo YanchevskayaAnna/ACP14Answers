@@ -2,10 +2,6 @@ package multithreading.forkJoin;
 
 import java.util.concurrent.ForkJoinPool;
 
-/**
- * Created by Anna on 15.09.2016.
- */
-
 public class ForkJoinTest {
     public static void main(String[] args) {
         final int SIZE = 10000000;
@@ -21,7 +17,8 @@ public class ForkJoinTest {
         });
 
         ForkJoinPool pool = new ForkJoinPool();
-        System.out.println(counter.compute());
+        pool.invoke(counter);
+        System.out.println(counter.join());
 
     }
 

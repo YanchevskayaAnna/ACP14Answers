@@ -1,15 +1,14 @@
 package multithreading.bankExample;
 
-/**
- * Created by Anna on 12.09.2016.
- */
 public class TransferRunnable implements Runnable {
     private Bank bank;
+//    private BankReadWrireLock bank;
     private int fromAccount;
     private double maxAmount;
     private int DELAY = 10;
 
-    public TransferRunnable(Bank b, int from, double max) {
+   public TransferRunnable(Bank b, int from, double max) {
+//      public TransferRunnable(BankReadWrireLock b, int from, double max) {
         bank = b;
         fromAccount = from;
         maxAmount = max;

@@ -2,10 +2,9 @@ package multithreading.mathCounting;
 
 import java.io.File;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
-/**
- * Created by Anna on 14.09.2016.
- */
 public class MatchCounterTest {
 
     public static void main(String[] args) {
@@ -16,7 +15,15 @@ public class MatchCounterTest {
         String keyword = in.nextLine();
         
         MatchCounter matchCounter = new MatchCounter(new File(directory), keyword);
-        System.out.println(matchCounter.find() + " matching files.");
-
+        FutureTask<Integer> task = new FutureTask(matchCounter);
+        Thread t = new Thread(task);
+        t.start();
+        try {
+            System.out.println(task.get() + " matching files.");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 }
